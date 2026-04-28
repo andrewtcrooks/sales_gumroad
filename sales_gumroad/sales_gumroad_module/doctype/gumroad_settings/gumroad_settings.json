@@ -1,0 +1,102 @@
+{
+ "actions": [],
+ "creation": "2026-04-27 14:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "account_settings",
+  "gumroad_clearing_account",
+  "gumroad_fees_account",
+  "gumroad_sales_account",
+  "sales_tax_payable_account",
+  "default_gumroad_item",
+  "column_break_7",
+  "company",
+  "default_customer_group",
+  "default_territory"
+ ],
+ "fields": [
+  {
+   "fieldname": "account_settings",
+   "fieldtype": "Section Break",
+   "label": "Account Settings"
+  },
+  {
+   "fieldname": "gumroad_clearing_account",
+   "fieldtype": "Link",
+   "label": "Gumroad Clearing Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "gumroad_fees_account",
+   "fieldtype": "Link",
+   "label": "Gumroad Fees Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "gumroad_sales_account",
+   "fieldtype": "Link",
+   "label": "Gumroad Sales Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "sales_tax_payable_account",
+   "fieldtype": "Link",
+   "label": "Sales Tax Payable Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "default_gumroad_item",
+   "fieldtype": "Link",
+   "label": "Default Gumroad Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_customer_group",
+   "fieldtype": "Link",
+   "label": "Default Customer Group",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "default_territory",
+   "fieldtype": "Link",
+   "label": "Default Territory",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-04-27 15:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Gumroad Sales",
+ "name": "Gumroad Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

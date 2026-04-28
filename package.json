@@ -1,0 +1,11 @@
+{
+  "name": "sales_gumroad",
+  "description": "Gumroad sales integration for ERPNext",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewtcrooks/sales_gumroad.git"
+  },
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {}
+}

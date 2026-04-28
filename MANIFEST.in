@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include gumroad_sales *.css
+recursive-include gumroad_sales *.csv
+recursive-include gumroad_sales *.html
+recursive-include gumroad_sales *.ico
+recursive-include gumroad_sales *.js
+recursive-include gumroad_sales *.json
+recursive-include gumroad_sales *.md
+recursive-include gumroad_sales *.png
+recursive-include gumroad_sales *.py
+recursive-include gumroad_sales *.svg
+recursive-include gumroad_sales *.txt
+recursive-exclude gumroad_sales *.pyc
