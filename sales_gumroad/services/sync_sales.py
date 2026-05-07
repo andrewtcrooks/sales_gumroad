@@ -153,20 +153,22 @@ def create_transaction_from_sale(sale: Dict) -> str:
 	# Product info
 	transaction.product_id = sale.get("product_id")
 	transaction.product_name = sale.get("product_name")
-	transaction.permalink = sale.get("permalink")
+	transaction.permalink = sale.get("product_permalink") or sale.get("permalink")
 
 	# Purchaser info
 	transaction.purchaser_email = sale.get("email") or sale.get("purchaser_email")
 	transaction.purchaser_name = sale.get("full_name") or sale.get("purchaser_name")
 	transaction.purchaser_id = sale.get("purchaser_id")
-	transaction.ip_country = sale.get("ip_country")
+	transaction.ip_country = sale.get("country_iso2") or sale.get("ip_country")
 
-	# Financial data
-	transaction.price = sale.get("price") or 0
-	transaction.gumroad_fee = sale.get("gumroad_fee") or 0
-	transaction.currency = sale.get("currency", "USD")
+	# Financial data (Gumroad returns cents, convert to dollars)
+	price_cents = sale.get("price") or 0
+	fee_cents = sale.get("gumroad_fee") or 0
+	transaction.price = price_cents / 100.0 if price_cents else 0
+	transaction.gumroad_fee = fee_cents / 100.0 if fee_cents else 0
+	transaction.currency = "USD"  # Gumroad API doesn't return currency code directly
 	transaction.formatted_display_price = sale.get("formatted_display_price")
-	transaction.tax_amount = sale.get("tax") or 0
+	transaction.tax_amount = sale.get("tax", 0) / 100.0 if sale.get("tax") else 0
 
 	# Flags
 	transaction.is_gift_receiver_purchase = sale.get("is_gift_receiver_purchase", False)
@@ -177,7 +179,7 @@ def create_transaction_from_sale(sale: Dict) -> str:
 
 	# Subscription info
 	transaction.subscription_id = sale.get("subscription_id")
-	transaction.is_recurring_charge = sale.get("is_recurring_charge", False)
+	transaction.is_recurring_charge = sale.get("is_recurring_billing") or sale.get("is_recurring_charge", False)
 	transaction.cancelled = sale.get("cancelled", False)
 	transaction.ended = sale.get("ended", False)
 
