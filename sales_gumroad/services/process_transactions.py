@@ -195,8 +195,11 @@ def create_payment_entry(invoice, settings, posting_date):
 
 	payment = get_payment_entry(invoice.doctype, invoice.name)
 	payment.posting_date = posting_date
-	payment.reference_date = posting_date
 	payment.paid_to = settings.gumroad_clearing_account
+
+	# Set reference for bank transaction (required for clearing account)
+	payment.reference_no = invoice.name
+	payment.reference_date = posting_date
 
 	# Set posting time flag for backdated payments
 	payment.set_posting_time = 1
