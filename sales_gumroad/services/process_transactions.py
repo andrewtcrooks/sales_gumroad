@@ -170,6 +170,9 @@ def create_sales_invoice(transaction, settings, customer_name, posting_date):
 			"add_deduct_tax": "Deduct"
 		})
 
+	# Set posting time flag for backdated invoices
+	invoice.set_posting_time = 1
+
 	invoice.insert(ignore_permissions=True)
 	invoice.submit()
 
@@ -194,6 +197,9 @@ def create_payment_entry(invoice, settings, posting_date):
 	payment.posting_date = posting_date
 	payment.reference_date = posting_date
 	payment.paid_to = settings.gumroad_clearing_account
+
+	# Set posting time flag for backdated payments
+	payment.set_posting_time = 1
 
 	payment.insert(ignore_permissions=True)
 	payment.submit()
