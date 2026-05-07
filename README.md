@@ -1,9 +1,20 @@
 # Gumroad Sales
 
-Frappe/ERPNext app for importing Gumroad sales from CSV.
+Frappe/ERPNext app for syncing Gumroad sales via API or CSV import.
 
 ## Features
 
+### 🆕 Automated API Sync (NEW!)
+- **Automated Sales Sync**: Sync sales from Gumroad API automatically
+  - Scheduled sync (hourly, every 15 min, or daily)
+  - Idempotent sync - safe to run multiple times
+  - Raw API data preserved for audit trail
+  - Transaction status tracking (NEW → PROCESSED → FAILED)
+  - Manual sync via dashboard
+  - Retry failed transactions
+  - See [GUMROAD_API_SETUP.md](GUMROAD_API_SETUP.md) for complete setup guide
+
+### Legacy CSV Import
 - **Gumroad CSV Import**: Import Gumroad payout CSVs directly into ERPNext
   - Creates Sales Invoices automatically
   - Tracks Gumroad fees separately
@@ -15,8 +26,8 @@ Frappe/ERPNext app for importing Gumroad sales from CSV.
 
 ```bash
 cd ~/frappe-bench
-bench get-app /path/to/gumroad_sales
-bench --site your-site.local install-app gumroad_sales
+bench get-app /path/to/sales_gumroad
+bench --site your-site.local install-app sales_gumroad
 bench --site your-site.local migrate
 bench restart
 ```
@@ -64,7 +75,7 @@ with open('Gumroad Payout of 2026-03-12.csv', 'r') as f:
     content = f.read()
 
 result = frappe.call(
-    'gumroad_sales.api.import_gumroad_csv',
+    'sales_gumroad.api.import_gumroad_csv',
     file_content=content
 )
 
@@ -103,7 +114,7 @@ For Washington State DOR tax reporting, install the companion app:
 To modify:
 
 ```bash
-cd ~/frappe-bench/apps/gumroad_sales
+cd ~/frappe-bench/apps/sales_gumroad
 # Edit files
 bench --site your-site.local migrate
 bench restart

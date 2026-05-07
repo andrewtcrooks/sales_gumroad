@@ -5,6 +5,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "api_settings",
+  "api_access_token",
+  "enable_auto_sync",
+  "sync_frequency",
+  "last_sales_sync",
+  "last_payout_sync",
   "account_settings",
   "gumroad_clearing_account",
   "gumroad_fees_account",
@@ -17,6 +23,43 @@
   "default_territory"
  ],
  "fields": [
+  {
+   "fieldname": "api_settings",
+   "fieldtype": "Section Break",
+   "label": "API Settings"
+  },
+  {
+   "fieldname": "api_access_token",
+   "fieldtype": "Password",
+   "label": "Gumroad API Access Token",
+   "description": "Get this from https://app.gumroad.com/settings/advanced#application-form"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_auto_sync",
+   "fieldtype": "Check",
+   "label": "Enable Auto Sync"
+  },
+  {
+   "default": "Hourly",
+   "depends_on": "eval:doc.enable_auto_sync==1",
+   "fieldname": "sync_frequency",
+   "fieldtype": "Select",
+   "label": "Sync Frequency",
+   "options": "Every 15 Minutes\nHourly\nDaily"
+  },
+  {
+   "fieldname": "last_sales_sync",
+   "fieldtype": "Datetime",
+   "label": "Last Sales Sync",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_payout_sync",
+   "fieldtype": "Datetime",
+   "label": "Last Payout Sync",
+   "read_only": 1
+  },
   {
    "fieldname": "account_settings",
    "fieldtype": "Section Break",

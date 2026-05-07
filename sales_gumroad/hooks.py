@@ -131,23 +131,16 @@ fixtures = [
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-#	"all": [
-#		"gumroad_sales.tasks.all"
-#	],
-#	"daily": [
-#		"gumroad_sales.tasks.daily"
-#	],
-#	"hourly": [
-#		"gumroad_sales.tasks.hourly"
-#	],
-#	"weekly": [
-#		"gumroad_sales.tasks.weekly"
-#	],
-#	"monthly": [
-#		"gumroad_sales.tasks.monthly"
-#	],
-# }
+scheduler_events = {
+	"hourly": [
+		"sales_gumroad.tasks.sync_and_process_gumroad_sales"
+	],
+	"cron": {
+		"*/15 * * * *": [
+			"sales_gumroad.tasks.sync_and_process_gumroad_sales"
+		]
+	}
+}
 
 # Testing
 # -------

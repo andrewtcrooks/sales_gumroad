@@ -1,0 +1,304 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-05-07 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "gumroad_sale_id",
+  "sale_timestamp",
+  "product_id",
+  "product_name",
+  "permalink",
+  "column_break_5",
+  "purchaser_email",
+  "purchaser_name",
+  "purchaser_id",
+  "ip_country",
+  "section_break_10",
+  "price",
+  "gumroad_fee",
+  "currency",
+  "formatted_display_price",
+  "tax_amount",
+  "is_gift_receiver_purchase",
+  "refunded",
+  "disputed",
+  "dispute_won",
+  "chargebacked",
+  "column_break_20",
+  "subscription_id",
+  "is_recurring_charge",
+  "cancelled",
+  "ended",
+  "license_key",
+  "quantity",
+  "license_disabled",
+  "affiliate",
+  "section_break_30",
+  "raw_json",
+  "section_break_32",
+  "sync_status",
+  "sales_invoice",
+  "payment_entry",
+  "error_message",
+  "synced_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "gumroad_sale_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Gumroad Sale ID",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "sale_timestamp",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Sale Timestamp",
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_id",
+   "fieldtype": "Data",
+   "label": "Product ID"
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Product Name"
+  },
+  {
+   "fieldname": "permalink",
+   "fieldtype": "Data",
+   "label": "Permalink"
+  },
+  {
+   "fieldname": "purchaser_email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Purchaser Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "purchaser_name",
+   "fieldtype": "Data",
+   "label": "Purchaser Name"
+  },
+  {
+   "fieldname": "purchaser_id",
+   "fieldtype": "Data",
+   "label": "Purchaser ID"
+  },
+  {
+   "fieldname": "ip_country",
+   "fieldtype": "Data",
+   "label": "IP Country"
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price"
+  },
+  {
+   "fieldname": "gumroad_fee",
+   "fieldtype": "Currency",
+   "label": "Gumroad Fee"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "formatted_display_price",
+   "fieldtype": "Data",
+   "label": "Formatted Display Price"
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "label": "Tax Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_gift_receiver_purchase",
+   "fieldtype": "Check",
+   "label": "Is Gift Receiver Purchase"
+  },
+  {
+   "default": "0",
+   "fieldname": "refunded",
+   "fieldtype": "Check",
+   "label": "Refunded"
+  },
+  {
+   "default": "0",
+   "fieldname": "disputed",
+   "fieldtype": "Check",
+   "label": "Disputed"
+  },
+  {
+   "default": "0",
+   "fieldname": "dispute_won",
+   "fieldtype": "Check",
+   "label": "Dispute Won"
+  },
+  {
+   "default": "0",
+   "fieldname": "chargebacked",
+   "fieldtype": "Check",
+   "label": "Chargebacked"
+  },
+  {
+   "fieldname": "subscription_id",
+   "fieldtype": "Data",
+   "label": "Subscription ID"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_recurring_charge",
+   "fieldtype": "Check",
+   "label": "Is Recurring Charge"
+  },
+  {
+   "default": "0",
+   "fieldname": "cancelled",
+   "fieldtype": "Check",
+   "label": "Cancelled"
+  },
+  {
+   "default": "0",
+   "fieldname": "ended",
+   "fieldtype": "Check",
+   "label": "Ended"
+  },
+  {
+   "fieldname": "license_key",
+   "fieldtype": "Data",
+   "label": "License Key"
+  },
+  {
+   "default": "1",
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "label": "Quantity"
+  },
+  {
+   "default": "0",
+   "fieldname": "license_disabled",
+   "fieldtype": "Check",
+   "label": "License Disabled"
+  },
+  {
+   "fieldname": "affiliate",
+   "fieldtype": "Data",
+   "label": "Affiliate"
+  },
+  {
+   "fieldname": "raw_json",
+   "fieldtype": "Long Text",
+   "label": "Raw JSON"
+  },
+  {
+   "default": "NEW",
+   "fieldname": "sync_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Sync Status",
+   "options": "NEW\nPROCESSED\nFAILED\nREFUNDED\nSKIPPED"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_entry",
+   "fieldtype": "Link",
+   "label": "Payment Entry",
+   "options": "Payment Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "error_message",
+   "fieldtype": "Text",
+   "label": "Error Message",
+   "read_only": 1
+  },
+  {
+   "fieldname": "synced_at",
+   "fieldtype": "Datetime",
+   "label": "Synced At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Financial Details"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_30",
+   "fieldtype": "Section Break",
+   "label": "Raw Data"
+  },
+  {
+   "fieldname": "section_break_32",
+   "fieldtype": "Section Break",
+   "label": "ERP Integration"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-07 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Gumroad Sales",
+ "name": "Gumroad Transaction",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
