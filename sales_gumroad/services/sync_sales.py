@@ -27,7 +27,8 @@ def sync_gumroad_sales(after_date: str = None, before_date: str = None) -> Dict:
 	# Determine date range
 	if not after_date and settings.last_sales_sync:
 		# Fetch from last sync with 1 hour overlap to catch any delayed records
-		last_sync = settings.last_sales_sync
+		from frappe.utils import get_datetime
+		last_sync = get_datetime(settings.last_sales_sync)
 		overlap = last_sync - timedelta(hours=1)
 		after_date = overlap.strftime("%Y-%m-%d")
 
