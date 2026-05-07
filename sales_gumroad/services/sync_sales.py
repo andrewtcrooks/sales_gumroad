@@ -147,8 +147,9 @@ def create_transaction_from_sale(sale: Dict) -> str:
 	# Timestamps
 	sale_timestamp = sale.get("created_at") or sale.get("timestamp")
 	if sale_timestamp:
-		# Gumroad returns ISO format timestamps
-		transaction.sale_timestamp = sale_timestamp
+		# Gumroad returns ISO format timestamps like "2026-02-24T14:53:34Z"
+		from frappe.utils import get_datetime
+		transaction.sale_timestamp = get_datetime(sale_timestamp)
 
 	# Product info
 	transaction.product_id = sale.get("product_id")
