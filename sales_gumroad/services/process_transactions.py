@@ -195,8 +195,7 @@ def create_payment_entry(invoice, settings, posting_date):
 
 	payment = get_payment_entry(invoice.doctype, invoice.name)
 	payment.posting_date = posting_date
-	# Use MC-6515 card account directly since Gumroad deposits there
-	payment.paid_to = "MC-6515 - Business Debit Card - DC"
+	payment.paid_to = settings.gumroad_clearing_account
 
 	# Set reference for bank transaction (required for clearing account)
 	payment.reference_no = invoice.name
@@ -285,3 +284,135 @@ def retry_failed_transaction(transaction_name):
 	except Exception as e:
 		frappe.db.rollback()
 		return {"success": False, "error": str(e)}
+
+
+def process_pending_payouts() -> Dict:
+	"""
+	Process NEW Gumroad Payouts - transfer funds from clearing to bank account
+
+	Returns:
+		Dict with processing statistics
+	"""
+	frappe.logger().info("Starting Gumroad payout processing")
+
+	settings = frappe.get_single("Gumroad Settings")
+
+	if not settings.company:
+		frappe.log_error(
+			"Gumroad Settings not configured - company required",
+			"Gumroad Payout Processor"
+		)
+		return {
+			"success": False,
+			"error": "Gumroad Settings not configured",
+			"processed": 0,
+			"failed": 0
+		}
+
+	# Get all Pending payouts
+	payouts = frappe.get_all(
+		"Gumroad Payout",
+		filters={"status": "Pending"},
+		order_by="payout_date asc",
+		limit=100
+	)
+
+	stats = {
+		"success": True,
+		"processed": 0,
+		"failed": 0,
+		"errors": []
+	}
+
+	for payout_name in payouts:
+		try:
+			payout = frappe.get_doc("Gumroad Payout", payout_name.name)
+			process_payout(payout, settings)
+			stats["processed"] += 1
+
+		except Exception as e:
+			stats["failed"] += 1
+			stats["errors"].append({
+				"payout": payout_name.name,
+				"error": str(e)
+			})
+			frappe.log_error(
+				message=f"Failed to process payout {payout_name.name}: {str(e)}",
+				title="Gumroad Payout Processing Error"
+			)
+
+	frappe.db.commit()
+
+	frappe.logger().info(
+		f"Payout processing complete: {stats['processed']} processed, "
+		f"{stats['failed']} failed"
+	)
+
+	return stats
+
+
+def process_payout(payout, settings):
+	"""
+	Process single payout - create Journal Entry to transfer from clearing to bank
+
+	Args:
+		payout: Gumroad Payout document
+		settings: Gumroad Settings document
+	"""
+	try:
+		if payout.status != "Pending":
+			return
+
+		# Get posting date from payout
+		posting_date = payout.payout_date if payout.payout_date else datetime.now().date()
+
+		# Create Journal Entry: Clearing → MC-6515
+		journal_entry = frappe.get_doc({
+			"doctype": "Journal Entry",
+			"voucher_type": "Bank Entry",
+			"posting_date": posting_date,
+			"company": settings.company,
+			"user_remark": f"Gumroad Payout {payout.gumroad_payout_id}",
+			"accounts": [
+				{
+					"account": settings.gumroad_clearing_account,
+					"debit_in_account_currency": 0,
+					"credit_in_account_currency": payout.total_amount
+				},
+				{
+					"account": "MC-6515 - Business Debit Card - DC",
+					"debit_in_account_currency": payout.total_amount,
+					"credit_in_account_currency": 0
+				}
+			]
+		})
+
+		journal_entry.set_posting_time = 1
+		journal_entry.insert(ignore_permissions=True)
+		journal_entry.submit()
+
+		# Update payout status
+		payout.status = "Processed"
+		payout.journal_entry = journal_entry.name
+		payout.processed_at = datetime.now()
+		payout.save(ignore_permissions=True)
+
+		frappe.logger().debug(f"Processed payout {payout.name}")
+
+	except Exception as e:
+		payout.status = "Failed"
+		payout.save(ignore_permissions=True)
+		raise
+
+
+@frappe.whitelist()
+def manual_process_payouts():
+	"""
+	Manually trigger payout processing (callable from UI)
+
+	Returns:
+		Processing statistics
+	"""
+	frappe.only_for("System Manager", "Accounts Manager")
+
+	return process_pending_payouts()
