@@ -384,9 +384,7 @@ def process_payout(payout, settings):
 				{
 					"account": "MC-6515 - Business Debit Card - DC",
 					"debit_in_account_currency": payout.total_amount,
-					"credit_in_account_currency": 0,
-					"reference_type": "Gumroad Payout",
-					"reference_name": payout.name
+					"credit_in_account_currency": 0
 				}
 			]
 		})
