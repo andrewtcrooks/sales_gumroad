@@ -195,7 +195,8 @@ def create_payment_entry(invoice, settings, posting_date):
 
 	payment = get_payment_entry(invoice.doctype, invoice.name)
 	payment.posting_date = posting_date
-	payment.paid_to = settings.gumroad_clearing_account
+	# Use MC-6515 card account directly since Gumroad deposits there
+	payment.paid_to = "MC-6515 - Business Debit Card - DC"
 
 	# Set reference for bank transaction (required for clearing account)
 	payment.reference_no = invoice.name
