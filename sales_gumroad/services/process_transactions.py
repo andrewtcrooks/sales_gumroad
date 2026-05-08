@@ -373,6 +373,8 @@ def process_payout(payout, settings):
 			"posting_date": posting_date,
 			"company": settings.company,
 			"user_remark": f"Gumroad Payout {payout.gumroad_payout_id}",
+			"cheque_no": payout.gumroad_payout_id,
+			"cheque_date": posting_date,
 			"accounts": [
 				{
 					"account": settings.gumroad_clearing_account,
@@ -382,7 +384,9 @@ def process_payout(payout, settings):
 				{
 					"account": "MC-6515 - Business Debit Card - DC",
 					"debit_in_account_currency": payout.total_amount,
-					"credit_in_account_currency": 0
+					"credit_in_account_currency": 0,
+					"reference_type": "Gumroad Payout",
+					"reference_name": payout.name
 				}
 			]
 		})
